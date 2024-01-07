@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\RegistroCollection;
 use App\Models\Registro;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Resources\RegistroCollection;
 
 class RegistrosController extends Controller
 {
     public function index () {
         $registros = Registro::where('estado', '0')->get();
-
-        
 
         if($registros->count() > 0) {
             Registro::where('estado', '0')->update(['estado' => '1']);
@@ -47,5 +46,27 @@ class RegistrosController extends Controller
             'message' => 'Petición de encendido enviada exitosamente'
         ];
 
+    }
+
+    public function actualizarEstado () {
+        $estado = $_GET['estado'];
+
+        if($estado == '1' || $estado == '0') {
+            DB::table('estadoPC')->update(['estaPrendida' => $estado]);
+            return [
+                'message' => 'Estado actualizado correctamente'
+            ];
+        }
+
+        return [
+            'message' => 'Valor inválido'
+        ];
+    }
+
+    public function obtenerEstado () {
+
+        $estado = DB::table('estadoPC')->get();
+
+        return response()->json($estado);
     }
 }
