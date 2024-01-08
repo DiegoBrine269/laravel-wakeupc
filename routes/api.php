@@ -22,5 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/registros', [RegistrosController::class, 'index']);
 Route::post('/registros', [RegistrosController::class, 'crear']);
 
-Route::get('/actualizar-estado', [RegistrosController::class, 'actualizarEstado']);
+// Route::get('/actualizar-estado', [RegistrosController::class, 'actualizarEstado']);
 Route::get('/obtener-estado', [RegistrosController::class, 'obtenerEstado']);
